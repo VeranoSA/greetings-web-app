@@ -291,7 +291,7 @@ nav {
   height: 100px;
   position: fixed;
   top: 0;
-  background: blue;
+  background: rgb(48, 255, 89);;
   z-index: 1;
 }
 
@@ -318,7 +318,7 @@ footer {
   font-family: 'Great Vibes', cursive;
   font-size: 24px;
   color: white;
-  background: blue;
+  background: rgb(48, 255, 89);
   position: fixed;
   bottom: 0;
   width: 100%;
