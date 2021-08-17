@@ -55,4 +55,8 @@ app.get("/results", (req, res) => {
     res.send("please enter a correct name!")
 })
 
-app.listen(3012);
+const PORT = process.env.PORT || 3012; //Make my port number configurable
+
+app.listen(PORT, function () {
+    console.log("App Started at", PORT)
+});
