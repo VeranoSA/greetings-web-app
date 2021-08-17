@@ -291,7 +291,7 @@ nav {
   height: 100px;
   position: fixed;
   top: 0;
-  background: rgb(48, 255, 89);;
+  background: rgb(0, 37, 160);;
   z-index: 1;
 }
 
@@ -301,6 +301,7 @@ nav a {
   margin: 20px;
   color: white;
   border: 4px double;
+  border-radius: 25px;
   padding: 5px 10px;
   position: relative;
   top: 25px;
@@ -318,7 +319,7 @@ footer {
   font-family: 'Great Vibes', cursive;
   font-size: 24px;
   color: white;
-  background: rgb(48, 255, 89);
+  background: rgb(0, 37, 160);
   position: fixed;
   bottom: 0;
   width: 100%;
@@ -363,6 +364,7 @@ body {
 
 #inputBox {
   border: 2px solid darkslategray;
+  border-radius: 25px;
   width: 65%;
   min-width: 300px;
   height: 50px;
@@ -380,6 +382,7 @@ input {
 
 button {
   border: 1px solid darkslategray;
+  border-radius: 25px;
   width: 100px;
   height: 40px;
   background-color: white;
