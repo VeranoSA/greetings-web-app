@@ -13,13 +13,13 @@ describe('Greet with factory function' , function(){
             greetFunc.langON('english', tebogoName)
             assert.equal('Hello, Tebogo', greetFunc.greetnames())
         })
-        it('Should return the name greated in sesotho and add', function(){
-            greetFunc.langON('sesotho', caraName)
-            assert.equal('Dumela, Cara', greetFunc.greetnames())
+        it('Should return the name greated in isiZulu', function(){
+            greetFunc.langON('isiZulu', caraName)
+            assert.equal('Sao Bona, Cara', greetFunc.greetnames())
         })
-        it('Should return the name greated in Isixhosa and add', function(){
-            greetFunc.langON('isixhosa', busiName)
-            assert.equal('Molweni, Busi', greetFunc.greetnames())
+        it('Should return the name greated in xiTsonga', function(){
+            greetFunc.langON('xiTsonga', busiName)
+            assert.equal('Avu sheni, Busi', greetFunc.greetnames())
         });
     });
 
@@ -59,23 +59,23 @@ describe('Greet with factory function' , function(){
             greetFunc.langON('english', vascoName)
             assert.equal('Hello, Vasco', greetFunc.greetnames())
         })
-        it('Should return the name greated in Sesotho', function(){
-            greetFunc.langON('sesotho', vascoName)
+        it('Should return the name greated in isiZulu', function(){
+            greetFunc.langON('isiZulu', vascoName)
 
-            assert.equal('Dumela, Vasco', greetFunc.greetnames())
+            assert.equal('Sao Bona, Vasco', greetFunc.greetnames())
         })
-        it('Should return the name greated in Isixhosa', function(){
-            greetFunc.langON('isixhosa', vascoName)
-            assert.equal('Molweni, Vasco', greetFunc.greetnames())
+        it('Should return the name greated in xiTsonga', function(){
+            greetFunc.langON('xiTsonga', vascoName)
+            assert.equal('Avu sheni, Vasco', greetFunc.greetnames())
         });
     });
     
-    describe('counter for name', function(){
+    describe('counter', function(){
     it('Should increment counter for each different name greeted', function () {
         var greetFunc = greetLangRadio()
         greetFunc.langON('Vasco','English');
-        greetFunc.langON('Lucky','Sesotho');
-        greetFunc.langON('Cara','Isixhosa');
+        greetFunc.langON('Lucky','isiZulu');
+        greetFunc.langON('Cara','xiTsonga');
        
         assert.equal(3,greetFunc.getCounter());
     });
@@ -83,17 +83,17 @@ describe('Greet with factory function' , function(){
     it('Should not increment counter if the name has been greeted even if you greet in different language', function () {
         var greetFunc = greetLangRadio()
         greetFunc.langON('Cara','English');
-        greetFunc.langON('Cara','Sesotho');
-        greetFunc.langON('Cara','Isixhosa');
+        greetFunc.langON('Cara','isiZulu');
+        greetFunc.langON('Cara','xiTsonga');
         greetFunc.langON('Eddie','English');
-        greetFunc.langON('Eddie','Sesotho');
-        greetFunc.langON('Eddie','Isixhosa');
+        greetFunc.langON('Eddie','isiZulu');
+        greetFunc.langON('Eddie','xiTsonga');
         greetFunc.langON('Lucky','English');
-        greetFunc.langON('Lucky','Sesotho');
-        greetFunc.langON('Lucky','Isixhosa');
+        greetFunc.langON('Lucky','isiZulu');
+        greetFunc.langON('Lucky','xiTsonga');
         greetFunc.langON('Tebogo','English');
-        greetFunc.langON('Tebogo','Sesotho');
-        greetFunc.langON('Tebogo','Isixhosa');
+        greetFunc.langON('Tebogo','isiZulu');
+        greetFunc.langON('Tebogo','xiTsonga');
        
         assert.equal(4,greetFunc.getCounter());
         });

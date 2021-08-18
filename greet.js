@@ -20,10 +20,10 @@ module.exports = function greetLangRadio() {
 
             if (languages == 'english'){
                 LanguageMsg = 'Hello, ' 
-            } if (languages == 'sesotho'){
-                LanguageMsg = 'Dumela, '
-            } if (languages == 'isixhosa'){
-                LanguageMsg = 'Molweni, '
+            } if (languages == 'isiZulu'){
+                LanguageMsg = 'Sao Bona, '
+            } if (languages == 'xiTsonga'){
+                LanguageMsg = 'Avu sheni, '
             }
             
             names = str;   

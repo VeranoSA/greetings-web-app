@@ -14,14 +14,14 @@ module.exports = function(){
             if(ArrName.match(RegExp)){
                 StrName = ArrName.charAt(0).toUpperCase() + ArrName.slice(1).toLowerCase();
 
-                if( language === "english" || language === "sesotho" || language === "isixhosa"){
+                if( language === "english" || language === "isiZulu" || language === "xiTsonga"){
                     if(language === "english"){
                         messages = "Hello, " + StrName;
                     }
-                    else if(language === "sesotho"){
-                        messages = "Dumela, " + StrName;
+                    else if(language === "isiZulu"){
+                        messages = "Sao Bona, " + StrName;
                     }
-                    else if(language === "isixhosa"){
+                    else if(language === "xiTsonga"){
                         messages = "Molo, " + StrName;
                     }
                     errorMsg = "You have enterd you name correct";
