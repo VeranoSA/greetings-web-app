@@ -1,7 +1,10 @@
 const express = require('express');
 const app = express();
 const greetLangRadio = require("./greet");
+const colors = require('colors');
 const helperfunction = require('./greet_helper');
+const flash = require('express-flash');
+const session = require('express-session')
 const exphbs  = require('express-handlebars');
 const handlebarSetup = exphbs({
     partialsDir: "./views/partials",
@@ -9,6 +12,12 @@ const handlebarSetup = exphbs({
     layoutsDir : './views/layouts'
 });
 var bodyParser = require('body-parser');
+
+app.use(session({
+    secret : "Error Messages",
+    resave: false,
+    saveUninitialized: true
+}));
 
 app.use(express.static('public'));
 
@@ -30,29 +39,40 @@ app.use(bodyParser.json())
 
 app.use(express.urlencoded({extended: false}));
 
-
+app.use(flash());
 
 app.get('/', (req, res) => {
+    if(req.body.Names==="" && req.body.languageRadio===undefined){
+        req.flash('info', "Please enter a name and Select a language!");
+    }
     res.render('index', {
         greeting : helper.getMsg(),
         counter : helper.getCounter(),
-        errormessages : helper.allErrors()
     });
 });
 
 app.post('/greeted', (req, res) => {
     helper.greeting(req.body.Names, req.body.languageRadio);
-
+    if(req.body.Names==="" && req.body.languageRadio===undefined){
+        req.flash('info', "Please enter a name and select a language!");
+    } else if(req.body.languageRadio===undefined){
+        req.flash('info', "Please select a language!");
+    } else if(req.body.Names===""){
+        req.flash('info', "Please enter a name!");
+    }
+    else if(req.body.Names!=="" && req.body.languageRadio!==undefined){
+        req.flash('info', "Name succesfully greeted!");
+    }
     res.redirect('/')
 });
 
 app.post('/greeting', (req, res) => {
 
-    res.send("thanks for greeting this name.")
+    res.send("")
 });
 
 app.get("/results", (req, res) => {
-    res.send("please enter a correct name!")
+    res.send("")
 })
 
 const PORT = process.env.PORT || 3012; //Make my port number configurable

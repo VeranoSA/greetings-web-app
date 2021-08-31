@@ -22,7 +22,7 @@ module.exports = function(){
                         messages = "Sao Bona, " + StrName;
                     }
                     else if(language === "xiTsonga"){
-                        messages = "Molo, " + StrName;
+                        messages = "Avu sheni, " + StrName;
                     }
                     errorMsg = "You have enterd you name correct";
 
@@ -34,19 +34,16 @@ module.exports = function(){
                         objName[StrName]++;
                     }
                 }
-                else{
-                    messages = "please select the language";
-                    errorMsg = "error";
-                }
-            }
-            else{
-                messages = "Dont use the special characters"
-                errorMsg = "error";
             }
         }
-        else{
-            messages = "Please enter your Name";
-            errorMsg = "error";
+        if(StrName === "" && language === undefined){
+            messages = "";
+        }
+        else if (StrName === "" && language !== undefined){
+            messages = "";
+        }
+        else if (StrName !== "" && language === undefined){
+            messages = "";
         }
     }
     var getMsg = function(){
