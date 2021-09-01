@@ -14,7 +14,7 @@ const handlebarSetup = exphbs({
 var bodyParser = require('body-parser');
 
 app.use(session({
-    secret : "Error Messages",
+    secret : "Error Message",
     resave: false,
     saveUninitialized: true
 }));
