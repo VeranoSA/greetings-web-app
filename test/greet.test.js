@@ -15,11 +15,11 @@ describe('Greet with factory function' , function(){
         })
         it('Should return the name greated in isiZulu', function(){
             greetFunc.langON('isiZulu', caraName)
-            assert.equal('Sao Bona, Cara', greetFunc.greetnames())
+            assert.equal('Sawubona, Cara', greetFunc.greetnames())
         })
         it('Should return the name greated in xiTsonga', function(){
             greetFunc.langON('xiTsonga', busiName)
-            assert.equal('Avu sheni, Busi', greetFunc.greetnames())
+            assert.equal('Avuxeni, Busi', greetFunc.greetnames())
         });
     });
 
@@ -62,11 +62,11 @@ describe('Greet with factory function' , function(){
         it('Should return the name greated in isiZulu', function(){
             greetFunc.langON('isiZulu', vascoName)
 
-            assert.equal('Sao Bona, Vasco', greetFunc.greetnames())
+            assert.equal('Sawubona, Vasco', greetFunc.greetnames())
         })
         it('Should return the name greated in xiTsonga', function(){
             greetFunc.langON('xiTsonga', vascoName)
-            assert.equal('Avu sheni, Vasco', greetFunc.greetnames())
+            assert.equal('Avuxeni, Vasco', greetFunc.greetnames())
         });
     });
     

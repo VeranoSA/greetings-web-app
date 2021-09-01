@@ -19,10 +19,10 @@ module.exports = function(){
                         messages = "Hello, " + StrName;
                     }
                     else if(language === "isiZulu"){
-                        messages = "Sao Bona, " + StrName;
+                        messages = "Sawubona, " + StrName;
                     }
                     else if(language === "xiTsonga"){
-                        messages = "Avu sheni, " + StrName;
+                        messages = "Avuxeni, " + StrName;
                     }
                     errorMsg = "You have enterd you name correct";
 

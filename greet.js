@@ -21,9 +21,9 @@ module.exports = function greetLangRadio() {
             if (languages == 'english'){
                 LanguageMsg = 'Hello, ' 
             } if (languages == 'isiZulu'){
-                LanguageMsg = 'Sao Bona, '
+                LanguageMsg = 'Sawubona, '
             } if (languages == 'xiTsonga'){
-                LanguageMsg = 'Avu sheni, '
+                LanguageMsg = 'Avuxeni, '
             }
             
             names = str;   
