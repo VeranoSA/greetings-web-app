@@ -61,7 +61,7 @@ app.post('/greeted', (req, res) => {
         req.flash('info', "Please enter a name!");
     }
     else if(req.body.Names!=="" && req.body.languageRadio!==undefined){
-        req.flash('info', "Name succesfully greeted!");
+        req.flash('info2', "Name succesfully greeted!");
     }
     res.redirect('/')
 });

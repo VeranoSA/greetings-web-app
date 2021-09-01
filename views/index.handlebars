@@ -8,7 +8,12 @@
     <div>
             {{#if messages.info}}
         <div class="err">
-            <span class="greetText" id="errorMessage">{{messages.info}}</span>
+            <span class="error-message">{{messages.info}}</span>
+        </div>
+        {{/if}}
+        {{#if messages.info2}}
+        <div class="err">
+            <span class="success">{{messages.info2}}</span>
         </div>
         {{/if}}
             </div>
