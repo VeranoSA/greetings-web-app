@@ -1,6 +1,5 @@
 const express = require('express');
 const app = express();
-const greetLangRadio = require("./greet");
 const colors = require('colors');
 const helperfunction = require('./greet_helper');
 const flash = require('express-flash');
@@ -13,6 +12,13 @@ const handlebarSetup = exphbs({
 });
 var bodyParser = require('body-parser');
 
+let fullPage = {
+    userData: {
+        greeting: ''
+    },
+    counter: 0
+}
+
 app.use(session({
     secret : "Error Message",
     resave: false,
@@ -21,7 +27,28 @@ app.use(session({
 
 app.use(express.static('public'));
 
-let helper = helperfunction();
+// DB Setup 
+//Set up an configaration on were we want to connect the database
+const {
+    Pool
+} = require('pg');
+// Heroku pool
+const pool = new Pool({
+    user: 'postgres',
+    host: '127.0.0.1',
+    database: 'greetings',
+    password: 'Tebogo13#',
+    port: 5432,
+
+});
+
+app.use(session({
+    secret : "Error Message",
+    resave: false,
+    saveUninitialized: true
+}));
+
+let greetings = helperfunction(pool);
 
 app.engine('handlebars', exphbs({defaultLayout: 'main'}));
 app.set('view engine', 'handlebars');
@@ -41,38 +68,57 @@ app.use(express.urlencoded({extended: false}));
 
 app.use(flash());
 
-app.get('/', (req, res) => {
-    if(req.body.Names==="" && req.body.languageRadio===undefined){
-        req.flash('info', "Please enter a name and Select a language!");
-    }
-    res.render('index', {
-        greeting : helper.getMsg(),
-        counter : helper.getCounter(),
+// Routes
+app.get('/', async function (req, res) {
+    fullPage.counter = await greetings.getCounter();
+    res.render('index', fullPage);
+});
+
+app.post('/greet', async function (req, res) {
+
+    if (((req.body.userEnteredName === "" && req.body.radioLang !== undefined)) ||
+    ((req.body.userEnteredName !== "" && req.body.radioLang === undefined)))
+    {
+        req.flash('info', 'Please enter a name and select a language!');
+        res.redirect('/');
+
+    } else {
+        greetings.name(req.body.userEnteredName);
+        greetings.language(req.body.radioLang);
+        req.flash('info', "Name succesfully greeted!");
+        res.render('index', {
+            userData: {
+                greeting: await greetings.greet()
+            },
+            counter: await greetings.getCounter()
+        });
+    };
+
+});
+
+
+app.get('/greeted', async function (req, res) {
+    let result = await greetings.greetedUsers('allUsers');
+    res.render('greeted', {
+        users: result
     });
+
 });
 
-app.post('/greeted', (req, res) => {
-    helper.greeting(req.body.Names, req.body.languageRadio);
-    if(req.body.Names==="" && req.body.languageRadio===undefined){
-        req.flash('info', "Please enter a name and select a language!");
-    } else if(req.body.languageRadio===undefined){
-        req.flash('info', "Please select a language!");
-    } else if(req.body.Names===""){
-        req.flash('info', "Please enter a name!");
-    }
-    else if(req.body.Names!=="" && req.body.languageRadio!==undefined){
-        req.flash('info2', "Name succesfully greeted!");
-    }
-    res.redirect('/')
+app.get('/counter/:user', async function (req, res) {
+    let userName = req.params.user;
+    let result = await greetings.greetedUsers(userName);
+    res.render('counter', result);
 });
 
-app.post('/greeting', (req, res) => {
-
-    res.send("")
+app.get('/admin', async function (req, res) {
+    res.render('admin')
 });
-
-app.get("/results", (req, res) => {
-    res.send("")
+app.post('/admin', async function (req, res) {
+    let message = await greetings.reset()
+    res.render('admin', {
+        message
+    });
 })
 
 const PORT = process.env.PORT || 3012; //Make my port number configurable

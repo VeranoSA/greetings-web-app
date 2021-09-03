@@ -1,43 +1,29 @@
 <div class="row center" id="">
     <div class="col-12">
-        <h1>Greetings App</h1>
+        <h1 id="displayName">Greetings App</h1>
+        <h4 class="error-message">{{messages.info}}</h4>
     </div>
 
-</div>
-<div class="row center">
-    <div>
-            {{#if messages.info}}
-        <div class="err">
-            <span class="error-message">{{messages.info}}</span>
-        </div>
-        {{/if}}
-        {{#if messages.info2}}
-        <div class="err">
-            <span class="success">{{messages.info2}}</span>
-        </div>
-        {{/if}}
-            </div>
 </div>
 
 <div class="row center">
     <div class="col-3"></div>
     <div class="col-6 center">
-        <form id="userInput" method="POST" action="/greeted">
-            <input id="inputBox" name="Names" type="" placeholder="Type in your name here" pattern="[a-zA-Z]+"
-                title="Please enter only letters A-Z">
+        <form id="userInput" method="POST" action="/greet">
+            <input id="inputBox" name="userEnteredName" type="" placeholder="Type in your name here" pattern="[a-zA-Z\\s]+" title="Please enter only letters A-Z">
 
             <br>
             <div class="in-block col-12 radio-toolbar">
 
-                <input type="radio" name="languageRadio" class="langRadio" value="english" id="1">
+                <input type="radio" name="radioLang" value="English" id="1">
 
                 <label for="1"></label>
                 <span>English | </span>
-                <input type="radio" name="languageRadio" class="langRadio" value="isiZulu" id="2">
+                <input type="radio" name="radioLang" value="Zulu" id="2">
 
                 <label for="2"></label>
                 <span>isiZulu | </span>
-                <input type="radio" name="languageRadio" class="langRadio" value="xiTsonga" id="3">
+                <input type="radio" name="radioLang" value="Tsonga" id="3">
                 <label for="3"></label>
                 <span>xiTsonga</span>
             </div>
@@ -53,7 +39,6 @@
     <div class="col-6" id="greetBox">
 
     </div>
-
 </div>
 <div class="row center">
     <div class="col-12 center" id="greetBox">
@@ -62,15 +47,18 @@
         </button>
     </div>
 </div>
-
+<div class="center">
+    <p id="counter-p">
+        <strong>
+            <span id="countNumber">{{this.userData.greeting}}</span>
+        </strong>
+    </p>
 </div>
+
 <div class="entry">
 </div>
 <div class="center">
     <p id="counter-p">
-        <div>
-    <h3><span class="greetText">{{greeting}}</span></h3>
-        </div>
         <strong>
             <span id="countNumber">{{counter}}</span> user(s) have been greeted on this app.
         </strong>
