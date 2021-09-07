@@ -20,7 +20,7 @@ let fullPage = {
 }
 
 app.use(session({
-    secret : "Error Message",
+    secret : "Tebogo Seanego",
     resave: false,
     saveUninitialized: true
 }));

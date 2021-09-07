@@ -1,102 +1,103 @@
+'use strict'
+
 const assert = require('assert');
-const greetLangRadio = require("../greet")
+const helperfunction = require('../greet_helper');
+const pg = require('pg');
+const Pool =pg.Pool;
 
-describe('Greet with factory function' , function(){
+//Database Set Up
+const pool = new Pool({
+    user: 'postgres',
+    host: '127.0.0.1',
+    database: 'greetings',
+    password: 'Tebogo13#',
+    port: 5432,
 
+});
 
-    describe('Returning all the names', function(){
-        var greetFunc = greetLangRadio()
-        var tebogoName = "Tebogo" 
-        var caraName = "Cara"
-        var busiName = "Busi"
-        it('Should return the name greeted in english', function(){
-            greetFunc.langON('english', tebogoName)
-            assert.equal('Hello, Tebogo', greetFunc.greetnames())
-        })
-        it('Should return the name greated in isiZulu', function(){
-            greetFunc.langON('isiZulu', caraName)
-            assert.equal('Sawubona, Cara', greetFunc.greetnames())
-        })
-        it('Should return the name greated in xiTsonga', function(){
-            greetFunc.langON('xiTsonga', busiName)
-            assert.equal('Avuxeni, Busi', greetFunc.greetnames())
-        });
+const greet = helperfunction(pool);
+
+describe('Greetings Web Unit Testing' , function(){
+    beforeEach(async function () {
+        await pool.query('delete from users;');
+    });
+    // Testing first case functionality
+    it('Should greet Cara with proper first letter capital when given a all lowercase name', async function () {
+        await greet.name('cara');
+        await greet.language('English');
+        assert.equal(await greet.greet(), 'Hello Cara!');
     });
 
-    describe('In case of non selected language or and empty string for the name', function(){
-        var greetFunc = greetLangRadio()
-        var caraName = "Cara" 
-        it('Should return "Please type in a name" if the string is empy for name', function(){
-          greetFunc.checkErrors('', 'english')
-          assert.equal('Please type in a name', greetFunc.checkErrors('', 'english') )
-        })
-
-        it('Should return "Please Select a Language" if the radio has not been selected', function(){
-            var name = greetFunc.langON('english', caraName)
-            var returnedMsg =  greetFunc.checkErrors(name, '')
-            assert.equal('Please Select a Language', returnedMsg )
-          })
+    it('Should greet Makho with proper first letter capital when given a all UPPERCASE name', async function () {
+        await greet.name('makho');
+        await greet.language('English');
+        assert.equal(await greet.greet(), 'Hello Makho!');
     })
-    describe('function uppercases the first charater' , function(){
-        var eddieName = "Eddie"
-        var vascoName = "Vasco" 
-        it('should change the first letter to upperCase', function(){
-            var greetFunc = greetLangRadio();
-            assert.equal(vascoName, greetFunc.capFirstLetter(vascoName));
-            
-        });
-        it('should change the uppercase to lower can when you write name', function(){
-            var greetFunc = greetLangRadio();
-            assert.equal(eddieName, greetFunc.capFirstLetter(eddieName));
-            
-        });
+
+    // Testing languages
+
+    it('Should greet Pholisa in English', async function () {
+        await greet.name('Pholisa');
+        await greet.language('English');
+        assert.equal(await greet.greet(), 'Hello Pholisa!');
+    });
+    it('Should greet Andre in xiTsonga', async function () {
+        await greet.name('Andre');
+        await greet.language('Tsonga');
+        assert.equal(await greet.greet(), 'Avuxeni Andre!');
+    });
+    it('Should greet Thabang in Afrikaans', async function () {
+        await greet.name('Thabang');
+        await greet.language('Zulu');
+        assert.equal(await greet.greet(), 'Saubona Thabang!');
     });
 
-    describe('Differnt languages and name', function(){
-        var greetFunc = greetLangRadio()
-        var vascoName = "Vasco" 
-        it('Should return the name greated in Engilish', function(){
-            greetFunc.langON('english', vascoName)
-            assert.equal('Hello, Vasco', greetFunc.greetnames())
-        })
-        it('Should return the name greated in isiZulu', function(){
-            greetFunc.langON('isiZulu', vascoName)
+    // Testing for name storage in database
+    it('Should add a user into the database when greeting', async function () {
+        await greet.name('Amogelang');
+        await greet.language('English');
+        await greet.greet();
+        let result = await greet.greetedUsers('Amogelang');
+        assert.equal(result.username, 'Amogelang');
+    });
+    // Testing for counter
+    it('Should return a count of all people greeted', async function () {
+        await greet.name('Pholisa');
+        await greet.language('English');
+        await greet.greet();
+        await greet.name('Andre');
+        await greet.language('English');
+        await greet.greet();
+        await greet.name('Cara');
+        await greet.language('English');
+        await greet.greet();
 
-            assert.equal('Sawubona, Vasco', greetFunc.greetnames())
-        })
-        it('Should return the name greated in xiTsonga', function(){
-            greetFunc.langON('xiTsonga', vascoName)
-            assert.equal('Avuxeni, Vasco', greetFunc.greetnames())
-        });
+        let result = await greet.getCounter();
+        assert.equal(result, 3);
     });
-    
-    describe('counter', function(){
-    it('Should increment counter for each different name greeted', function () {
-        var greetFunc = greetLangRadio()
-        greetFunc.langON('Vasco','English');
-        greetFunc.langON('Lucky','isiZulu');
-        greetFunc.langON('Cara','xiTsonga');
-       
-        assert.equal(3,greetFunc.getCounter());
+    it('Should return the correct number of times a certain user was greeted', async function () {
+        await greet.name('Pholisa');
+        await greet.language('English');
+        await greet.greet();
+        await greet.greet();
+        await greet.greet();
+        await greet.greet();
+        await greet.greet();
+        await greet.name('Cara');
+        await greet.language('English');
+        await greet.greet();
+        await greet.name('Andre');
+        await greet.language('English');
+        await greet.greet();
+
+        let result = await greet.greetedUsers('Pholisa');
+        assert.equal(result.greet_count, 5);
     });
-  
-    it('Should not increment counter if the name has been greeted even if you greet in different language', function () {
-        var greetFunc = greetLangRadio()
-        greetFunc.langON('Cara','English');
-        greetFunc.langON('Cara','isiZulu');
-        greetFunc.langON('Cara','xiTsonga');
-        greetFunc.langON('Eddie','English');
-        greetFunc.langON('Eddie','isiZulu');
-        greetFunc.langON('Eddie','xiTsonga');
-        greetFunc.langON('Lucky','English');
-        greetFunc.langON('Lucky','isiZulu');
-        greetFunc.langON('Lucky','xiTsonga');
-        greetFunc.langON('Tebogo','English');
-        greetFunc.langON('Tebogo','isiZulu');
-        greetFunc.langON('Tebogo','xiTsonga');
-       
-        assert.equal(4,greetFunc.getCounter());
-        });
+    // Testing for deletion
+    it('Should delete all records from the database', async function () {
+        let result = await greet.reset();
+        assert.equal(result, 'Reccords have been cleared successfully.');
+        assert.equal(await greet.getCounter(), 0);
     })
 
 });
