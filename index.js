@@ -38,8 +38,7 @@ const pool = new Pool({
     host: 'ec2-44-197-94-126.compute-1.amazonaws.com',
     database: 'd4t968b5v0lopc',
     password: '4453f68486dd6981ce17e604f18a4d0b7dfb16a410de1c7cf0d6e20a22a6d8d4',
-    port: 5432,
-    ssl: true
+    port: 5432
 });
 
 app.use(session({
