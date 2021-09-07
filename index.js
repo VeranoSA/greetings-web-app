@@ -1,16 +1,13 @@
-const express = require('express');
-const app = express();
-const colors = require('colors');
-const helperfunction = require('./greet_helper');
+
+
+let express = require('express');
+let app = express();
+let PORT = process.env.PORT || 3012; //Make my port number configurable
+let helperfunction = require('./greet_helper');
 const flash = require('express-flash');
-const session = require('express-session')
-const exphbs  = require('express-handlebars');
-const handlebarSetup = exphbs({
-    partialsDir: "./views/partials",
-    viewPath:  './views',
-    layoutsDir : './views/layouts'
-});
-var bodyParser = require('body-parser');
+let session = require('express-session')
+let exphbs  = require('express-handlebars');
+let bodyParser = require('body-parser');
 
 let fullPage = {
     userData: {
@@ -18,14 +15,6 @@ let fullPage = {
     },
     counter: 0
 }
-
-app.use(session({
-    secret : "Tebogo Seanego",
-    resave: false,
-    saveUninitialized: true
-}));
-
-app.use(express.static('public'));
 
 // DB Setup 
 //Set up an configaration on were we want to connect the database
@@ -44,29 +33,23 @@ const pool = new Pool({
 
 app.use(session({
     secret : "Error Message",
-    resave: false,
-    saveUninitialized: true
+    
 }));
 
 let greetings = helperfunction(pool);
 
-app.engine('handlebars', exphbs({defaultLayout: 'main'}));
-app.set('view engine', 'handlebars');
-
-app.engine('handlebars', handlebarSetup);
-app.set('view engine', 'handlebars');
-
-app.engine('handlebars', exphbs({defaultLayout: 'main', layoutsDir:__dirname + '/views/layouts'}));
-app.set('view engine', 'handlebars');
-
-// parse application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({ extended: false }))
-// parse application/json
-app.use(bodyParser.json())
-
-app.use(express.urlencoded({extended: false}));
 
 app.use(flash());
+
+app.engine('handlebars', exphbs({
+    defaultLayout: 'main',
+}));
+app.set('view engine', 'handlebars');
+app.use('/', express.static(__dirname + '/public'));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({
+    extended: false
+}));
 
 // Routes
 app.get('/', async function (req, res) {
@@ -120,8 +103,6 @@ app.post('/admin', async function (req, res) {
         message
     });
 })
-
-const PORT = process.env.PORT || 3012; //Make my port number configurable
 
 app.listen(PORT, function () {
     console.log("App Started at", PORT)

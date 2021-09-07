@@ -11,7 +11,7 @@ const pool = new Pool({
     database: 'd4t968b5v0lopc',
     password: '4453f68486dd6981ce17e604f18a4d0b7dfb16a410de1c7cf0d6e20a22a6d8d4',
     port: 5432,
-    ssl: true
+    ssl:true
 });
 
 const greet = helperfunction(pool);
