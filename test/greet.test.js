@@ -5,11 +5,17 @@ const helperfunction = require('../greet_helper');
 const pg = require('pg');
 const Pool =pg.Pool;
 
-const connectionString = process.env.DATABASE_URL || 'postgresql://localhost:5432/greetings';
+let ssl = false
+const connectionString = process.env.DATABASE_URL || 'postgresql://postgres:12345@localhost:5432/greetings';
 
+if(process.env.DATABASE_URL){
+    ssl = { rejectUnauthorized: false }
+}
+
+console.log({ssl})
 const pool = new Pool({
     connectionString,
-    ssl: false
+    ssl
 });
 
 /*
@@ -112,7 +118,7 @@ describe('Greetings Web Unit Testing' , function(){
     // Testing for deletion
     it('Should delete all records from the database', async function () {
         let result = await greet.reset();
-        assert.equal(result, 'Reccords have been cleared successfully.');
+        assert.equal(result, 'Database cleared successfully.');
         assert.equal(await greet.getCounter(), 0);
     })
 
