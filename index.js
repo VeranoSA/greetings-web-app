@@ -22,13 +22,21 @@ const {
     Pool
 } = require('pg');
 // Heroku pool
-const pool = new Pool({
+/*const pool = new Pool({
     user: 'tcjuiobxjjyuem',
     host: 'ec2-44-197-94-126.compute-1.amazonaws.com',
     database: 'd4t968b5v0lopc',
     password: '4453f68486dd6981ce17e604f18a4d0b7dfb16a410de1c7cf0d6e20a22a6d8d4',
     port: 5432,
-    ssl: true
+});
+*/
+const pool = new Pool({
+    user: 'postgres',
+    host: '127.0.0.1',
+    database: 'greetings',
+    password: 'Tebogo13#',
+    port: 5432,
+
 });
 
 app.use(session({
@@ -37,7 +45,6 @@ app.use(session({
 }));
 
 let greetings = helperfunction(pool);
-
 
 app.use(flash());
 
@@ -68,7 +75,7 @@ app.post('/greet', async function (req, res) {
     } else {
         greetings.name(req.body.userEnteredName);
         greetings.language(req.body.radioLang);
-        req.flash('info', "Name succesfully greeted!");
+        req.flash('info2', "Name succesfully greeted!");
         res.render('index', {
             userData: {
                 greeting: await greetings.greet()
