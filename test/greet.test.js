@@ -5,14 +5,12 @@ const helperfunction = require('../greet_helper');
 const pg = require('pg');
 const Pool =pg.Pool;
 
+const connectionString = process.env.DATABASE_URL || 'postgresql://localhost:5432/greetings';
 
 const pool = new Pool({
-    user: 'tcjuiobxjjyuem',
-    host: 'ec2-44-197-94-126.compute-1.amazonaws.com',
-    database: 'd4t968b5v0lopc',
-    password: '4453f68486dd6981ce17e604f18a4d0b7dfb16a410de1c7cf0d6e20a22a6d8d4',
-    port: 5432,
+    connectionString
 });
+
 /*
 //Database Set Up
 const pool = new Pool({

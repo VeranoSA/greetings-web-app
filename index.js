@@ -9,18 +9,28 @@ let session = require('express-session')
 let exphbs  = require('express-handlebars');
 let bodyParser = require('body-parser');
 
+/*
 let fullPage = {
     userData: {
         greeting: ''
     },
     counter: 0
 }
-
+*/
 // DB Setup 
 //Set up an configaration on were we want to connect the database
 const {
     Pool
 } = require('pg');
+
+const connectionString = process.env.DATABASE_URL || 'postgresql://postgres:12345@localhost:5432/greetings';
+
+const pool = new Pool({
+    connectionString
+});
+
+console.log(process.env.DATABASE_URL)
+/*
 // Heroku pool
 const pool = new Pool({
     user: 'tcjuiobxjjyuem',
@@ -60,8 +70,7 @@ app.use(bodyParser.urlencoded({
 
 // Routes
 app.get('/', async function (req, res) {
-    fullPage.counter = await greetings.getCounter();
-    res.render('index', fullPage);
+    res.render('index');
 });
 
 app.post('/greet', async function (req, res) {
