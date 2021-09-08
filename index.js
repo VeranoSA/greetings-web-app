@@ -23,11 +23,17 @@ const {
     Pool
 } = require('pg');
 
+let ssl = false
 const connectionString = process.env.DATABASE_URL || 'postgresql://postgres:12345@localhost:5432/greetings';
 
+if(process.env.DATABASE_URL){
+    ssl = { rejectUnauthorized: false }
+}
+
+console.log({ssl})
 const pool = new Pool({
     connectionString,
-    ssl: { rejectUnauthorized: false }
+    ssl
 });
 
 /*
