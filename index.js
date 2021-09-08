@@ -82,9 +82,11 @@ app.get('/', async function (req, res) {
 app.post('/greet', async function (req, res) {
 
     if (((req.body.userEnteredName === "" && req.body.radioLang !== undefined)) ||
-    ((req.body.userEnteredName !== "" && req.body.radioLang === undefined)))
+    ((req.body.userEnteredName !== "" && req.body.radioLang === undefined)) ||
+    ((req.body.userEnteredName === "" && req.body.radioLang === undefined)))
     {
         req.flash('info', 'Please enter a name and select a language!');
+        counter: await greetings.getCounter()
         res.redirect('/');
 
     } else {
