@@ -49,7 +49,7 @@ describe('Greetings Web Unit Testing' , function(){
         await greet.language('English');
         assert.equal(await greet.greet(), 'Hello Pholisa!');
     });
-    it('Should greet Andre in xiTsonga', async function () {
+    it('Should greet Andre in Tshitsonga', async function () {
         await greet.name('Andre');
         await greet.language('Tsonga');
         assert.equal(await greet.greet(), 'Avuxeni Andre!');

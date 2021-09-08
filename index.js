@@ -76,7 +76,12 @@ app.use(bodyParser.urlencoded({
 
 // Routes
 app.get('/', async function (req, res) {
-    res.render('index');
+    res.render('index', {
+        userData: {
+            greeting: ''
+        },
+        counter: await greetings.getCounter()
+    });
 });
 
 app.post('/greet', async function (req, res) {
@@ -86,7 +91,6 @@ app.post('/greet', async function (req, res) {
     ((req.body.userEnteredName === "" && req.body.radioLang === undefined)))
     {
         req.flash('info', 'Please enter a name and select a language!');
-        counter: await greetings.getCounter()
         res.redirect('/');
 
     } else {
