@@ -8,7 +8,8 @@ const Pool =pg.Pool;
 const connectionString = process.env.DATABASE_URL || 'postgresql://localhost:5432/greetings';
 
 const pool = new Pool({
-    connectionString
+    connectionString,
+    ssl: false
 });
 
 /*

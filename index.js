@@ -26,10 +26,10 @@ const {
 const connectionString = process.env.DATABASE_URL || 'postgresql://postgres:12345@localhost:5432/greetings';
 
 const pool = new Pool({
-    connectionString
+    connectionString,
+    ssl: false
 });
 
-console.log(process.env.DATABASE_URL)
 /*
 // Heroku pool
 const pool = new Pool({
