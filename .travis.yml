@@ -3,12 +3,11 @@ node_js:
     "16.8.0"
     
     env:
-    - DB=postgresql://postgres:12345@localhost:5432/greetings
+    - DATABASE_URL=postgresql://postgres:12345@localhost:5432/greetings
+    
      before_script:
     - psql -c 'create database  greetings;' -U postgres
     - psql -U postgres -d greetings -a -f database.sql
 
-    addons:
-        apt:
-        packages:
-        - postgresql-server-dev-13
+    services:
+  - postgresql
