@@ -5,17 +5,12 @@ const helperfunction = require('../greet_helper');
 const pg = require('pg');
 const Pool =pg.Pool;
 
-let ssl = false
-const connectionString = process.env.DATABASE_URL || 'postgresql://postgres:12345@localhost:5432/greetings';
 
-if(process.env.DATABASE_URL){
-    ssl = { rejectUnauthorized: false }
-}
+const connectionString = 'postgres://tcjuiobxjjyuem:4453f68486dd6981ce17e604f18a4d0b7dfb16a410de1c7cf0d6e20a22a6d8d4@ec2-44-197-94-126.compute-1.amazonaws.com:5432/d4t968b5v0lopc'
 
-console.log({ssl})
 const pool = new Pool({
     connectionString,
-    ssl
+    ssl: { rejectUnauthorized: false }
 });
 
 /*
