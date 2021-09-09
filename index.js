@@ -30,7 +30,6 @@ if(process.env.DATABASE_URL){
     ssl = { rejectUnauthorized: false }
 }
 
-console.log({ssl})
 const pool = new Pool({
     connectionString,
     ssl
