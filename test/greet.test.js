@@ -102,13 +102,13 @@ describe('Greetings Web Unit Testing' , function(){
         await greet.greet();
 
         let result = await greet.greetedUsers('Pholisa');
-        assert.equal(result.greet_count, 6);
+        assert.equal(result.greet_count, '5');
 
         let result2 = await greet.greetedUsers('Cara');
-        assert.equal(result2.greet_count, 3);
+        assert.equal(result2.greet_count, '3');
 
         let result3 = await greet.greetedUsers('Andre');
-        assert.equal(result3.greet_count, 1);
+        assert.equal(result3.greet_count, '1');
     });
     // Testing for deletion
     it('Should delete all records from the database', async function () {
