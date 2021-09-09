@@ -82,7 +82,7 @@ describe('Greetings Web Unit Testing' , function(){
         await greet.greet();
 
         let result = await greet.getCounter();
-        assert.equal(result, 3);
+        assert.equal(result, '3');
     });
     it('Should return the correct number of times a certain user was greeted', async function () {
         await greet.name('Pholisa');
