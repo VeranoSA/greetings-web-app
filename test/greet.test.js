@@ -1,7 +1,7 @@
 'use strict'
 
 const assert = require('assert');
-const helperfunction = require('../greet_helper');
+const helperfunction = require('../routes/greet_helper');
 const pg = require('pg');
 const Pool =pg.Pool;
 
