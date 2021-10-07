@@ -3,7 +3,7 @@
 let express = require('express');
 let app = express();
 let PORT = process.env.PORT || 3012; //Make my port number configurable
-let helperfunction = require('./greet_helper');
+let helperfunction = require('./routes/greet_helper');
 const flash = require('express-flash');
 let session = require('express-session')
 let exphbs  = require('express-handlebars');
