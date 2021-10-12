@@ -83,36 +83,15 @@ app.get('/', async function (req, res) {
     });
 });
 
-app.post('/greet', async function (req, res) {
+//separated routes logic to greet_helper
 
-    if (((req.body.userEnteredName === "" && req.body.radioLang !== undefined)) ||
-    ((req.body.userEnteredName !== "" && req.body.radioLang === undefined)) ||
-    ((req.body.userEnteredName === "" && req.body.radioLang === undefined)))
-    {
-        req.flash('info', 'Please enter a name and select a language!');
-        res.redirect('/');
-
-    } else {
-        greetings.name(req.body.userEnteredName);
-        greetings.language(req.body.radioLang);
-        req.flash('info2', "Name succesfully greeted!");
-        res.render('index', {
-            userData: {
-                greeting: await greetings.greet()
-            },
-            counter: await greetings.getCounter()
-        });
-    };
-
-});
-
+app.post('/greet', greetings.routesLogic);
 
 app.get('/greeted', async function (req, res) {
     let result = await greetings.greetedUsers('allUsers');
     res.render('greeted', {
         users: result
     });
-
 });
 
 app.get('/counter/:user', async function (req, res) {
@@ -124,6 +103,7 @@ app.get('/counter/:user', async function (req, res) {
 app.get('/admin', async function (req, res) {
     res.render('admin')
 });
+
 app.post('/admin', async function (req, res) {
     let message = await greetings.reset()
     res.render('admin', {

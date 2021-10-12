@@ -15,10 +15,10 @@ module.exports = function (client) {
     };
 
     // setter functions
-    let setName = function (name) {
+    const setName = function (name) {
         greetData.name = fixName(name);
     }
-    let setLang = function (language) {
+    const setLang = function (language) {
         greetData.lang = language;
     }
 
@@ -95,6 +95,28 @@ module.exports = function (client) {
         return await 'Database cleared successfully.';
     }
 
+    async function routesLogic(req, res) {
+
+        if (((req.body.userEnteredName === "" && req.body.radioLang !== undefined)) ||
+        ((req.body.userEnteredName !== "" && req.body.radioLang === undefined)) ||
+        ((req.body.userEnteredName === "" && req.body.radioLang === undefined)))
+        {
+            req.flash('info', 'Please enter a name and select a language!');
+            res.redirect('/');
+    
+        } else {
+            setName(req.body.userEnteredName);
+            setLang(req.body.radioLang);
+            req.flash('info2', "Name succesfully greeted!");
+            res.render('index', {
+                userData: {
+                    greeting: await processGreeting()
+                },
+                counter: await counter()
+            });
+        };
+    
+    };
 
     return {
         language: setLang,
@@ -104,6 +126,7 @@ module.exports = function (client) {
         greetData,
         getCounter: counter,
         greetedUsers,
-        reset: deleteUsers
+        reset: deleteUsers,
+        routesLogic
     };
 };
