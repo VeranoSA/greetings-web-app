@@ -61,29 +61,6 @@ describe('Greetings Web Unit Testing' , function(){
         assert.equal(await greet.greet(), 'Saubona Thabang!');
     });
 
-    // Testing for name storage in database
-    it('Should add a user into the database when greeting', async function () {
-        await greet.name('Amogelang');
-        await greet.language('English');
-        await greet.greet();
-        let result = await greet.greetedUsers('Amogelang');
-        assert.equal(result.username, 'Amogelang');
-    });
-    // Testing for counter
-    it('Should return a count of all people greeted', async function () {
-        await greet.name('Pholisa');
-        await greet.language('English');
-        await greet.greet();
-        await greet.name('Andre');
-        await greet.language('English');
-        await greet.greet();
-        await greet.name('Cara');
-        await greet.language('English');
-        await greet.greet();
-
-        let result = await greet.getCounter();
-        assert.equal(result, '3');
-    });
     // Testing for deletion
     it('Should delete all records from the database', async function () {
         let result = await greet.reset();
