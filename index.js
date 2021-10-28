@@ -51,7 +51,6 @@ const pool = new Pool({
     database: 'greetings',
     password: 'Tebogo13#',
     port: 5432,
-
 });
 */
 app.use(session({

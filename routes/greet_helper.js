@@ -92,7 +92,7 @@ module.exports = function (client) {
     let deleteUsers = async function () {
         let sql = ('DELETE FROM users');
         let result = await client.query(sql);
-        return await 'Database cleared successfully.';
+        return 'Database cleared successfully.';
     }
 
     async function routesLogic(req, res) {
