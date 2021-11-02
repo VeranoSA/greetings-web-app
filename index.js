@@ -9,14 +9,6 @@ let session = require('express-session')
 let exphbs  = require('express-handlebars');
 let bodyParser = require('body-parser');
 
-/*
-let fullPage = {
-    userData: {
-        greeting: ''
-    },
-    counter: 0
-}
-*/
 // DB Setup 
 //Set up an configaration on were we want to connect the database
 const {
@@ -35,24 +27,6 @@ const pool = new Pool({
     ssl
 });
 
-/*
-// Heroku pool
-const pool = new Pool({
-    user: 'tcjuiobxjjyuem',
-    host: 'ec2-44-197-94-126.compute-1.amazonaws.com',
-    database: 'd4t968b5v0lopc',
-    password: '4453f68486dd6981ce17e604f18a4d0b7dfb16a410de1c7cf0d6e20a22a6d8d4',
-    port: 5432,
-});
-/*
-const pool = new Pool({
-    user: 'postgres',
-    host: '127.0.0.1',
-    database: 'greetings',
-    password: 'Tebogo13#',
-    port: 5432,
-});
-*/
 app.use(session({
     secret : "Error Message",
     
@@ -73,42 +47,14 @@ app.use(bodyParser.urlencoded({
 }));
 
 // Routes
-app.get('/', async function (req, res) {
-    res.render('index', {
-        userData: {
-            greeting: ''
-        },
-        counter: await greetings.getCounter()
-    });
-});
-
 //separated routes logic to greet_helper
+app.get('/', greetings.routesLogic0);
+app.post('/greet', greetings.routesLogic1);
+app.get('/greeted', greetings.routesLogic2);
+app.get('/counter/:user', greetings.routesLogic3);
+app.get('/admin', greetings.routesLogic4);
+app.post('/admin', greetings.routesLogic5);
 
-app.post('/greet', greetings.routesLogic);
-
-app.get('/greeted', async function (req, res) {
-    let result = await greetings.greetedUsers('allUsers');
-    res.render('greeted', {
-        users: result
-    });
-});
-
-app.get('/counter/:user', async function (req, res) {
-    let userName = req.params.user;
-    let result = await greetings.greetedUsers(userName);
-    res.render('counter', result);
-});
-
-app.get('/admin', async function (req, res) {
-    res.render('admin')
-});
-
-app.post('/admin', async function (req, res) {
-    let message = await greetings.reset()
-    res.render('admin', {
-        message
-    });
-})
 
 app.listen(PORT, function () {
     console.log("App Started at", PORT)

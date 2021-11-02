@@ -13,17 +13,6 @@ const pool = new Pool({
     ssl: { rejectUnauthorized: false }
 });
 
-/*
-//Database Set Up
-const pool = new Pool({
-    user: 'postgres',
-    host: '127.0.0.1',
-    database: 'greetings',
-    password: 'Tebogo13#',
-    port: 5432,
-
-});
-*/
 const greet = helperfunction(pool);
 
 describe('Greetings Web Unit Testing' , function(){

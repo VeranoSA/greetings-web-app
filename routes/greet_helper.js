@@ -94,16 +94,24 @@ module.exports = function (client) {
         let result = await client.query(sql);
         return 'Database cleared successfully.';
     }
+    //Routes logic Starts Here
+    async function routesLogic0(req, res){
+        res.render('index', {
+            userData: {
+                greeting: ''
+            },
+            counter: await counter()
+        });
+    };
 
-    async function routesLogic(req, res) {
+    async function routesLogic1(req, res) {
 
         if (((req.body.userEnteredName === "" && req.body.radioLang !== undefined)) ||
-        ((req.body.userEnteredName !== "" && req.body.radioLang === undefined)) ||
-        ((req.body.userEnteredName === "" && req.body.radioLang === undefined)))
-        {
+            ((req.body.userEnteredName !== "" && req.body.radioLang === undefined)) ||
+            ((req.body.userEnteredName === "" && req.body.radioLang === undefined))) {
             req.flash('info', 'Please enter a name and select a language!');
             res.redirect('/');
-    
+
         } else {
             setName(req.body.userEnteredName);
             setLang(req.body.radioLang);
@@ -115,8 +123,34 @@ module.exports = function (client) {
                 counter: await counter()
             });
         };
-    
+
     };
+
+    async function routesLogic2(req, res) {
+        let result = await greetedUsers('allUsers');
+        res.render('greeted', {
+            users: result
+        });
+    };
+
+    async function routesLogic3(req, res) {
+        let userName = req.params.user;
+        let result = await greetedUsers(userName);
+        res.render('counter', result);
+    };
+
+    async function routesLogic4(req, res) {
+        res.render('admin')
+    };
+
+    async function routesLogic5(req, res){
+        let message = await deleteUsers()
+        res.render('admin', {
+            message
+        });
+    }
+
+    //Routes Logic Ends Here
 
     return {
         language: setLang,
@@ -127,6 +161,11 @@ module.exports = function (client) {
         getCounter: counter,
         greetedUsers,
         reset: deleteUsers,
-        routesLogic
+        routesLogic0,
+        routesLogic1,
+        routesLogic2,
+        routesLogic3,
+        routesLogic4,
+        routesLogic5
     };
 };
